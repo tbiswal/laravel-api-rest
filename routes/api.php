@@ -19,6 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Ex - http://127.0.0.1:8000/api/books
+// tony_admin@laravel.com/admin
 Route::middleware('auth.basic')->group(function () {
     Route::apiResource('books', BooksController::class);
 });
