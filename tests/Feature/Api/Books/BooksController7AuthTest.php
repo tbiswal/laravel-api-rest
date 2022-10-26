@@ -7,7 +7,7 @@ use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class BooksController5AuthTest extends TestCase
+class BooksController7AuthTest extends TestCase
 {
     use RefreshDatabase;
 

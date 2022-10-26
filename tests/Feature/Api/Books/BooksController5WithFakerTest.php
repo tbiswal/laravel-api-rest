@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Faker\Factory as Faker;
 
-class BooksController4WithFakerTest extends TestCase
+class BooksController5WithFakerTest extends TestCase
 {
     use RefreshDatabase;
     use WithoutMiddleware;
