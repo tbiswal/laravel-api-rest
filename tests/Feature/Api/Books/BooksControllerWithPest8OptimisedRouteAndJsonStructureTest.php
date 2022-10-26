@@ -10,18 +10,39 @@ use function Pest\Faker\faker;
 uses(RefreshDatabase::class);
 
 it('can list all the books', function () {
-    login()->json('GET', route('books.index'), [], [])->assertStatus(200);
+    login()->get('api/books')
+        ->assertStatus(200)
+        ->assertJsonStructure([
+            'data' => array(
+                '*' => array(
+                    'id',
+                    'title',
+                    'price',
+                    'author',
+                    'editor',
+                )
+            )
+        ]);
 });
 
 it('can list a specific book', function () {
     $book = Book::factory()->create();
 
-    login()->json('GET', route('books.show', $book->id), [], [])
-        ->assertStatus(200);
+    login()->get('/api/books/' . $book->id)
+        ->assertStatus(200)
+        ->assertJsonStructure([
+            'data' => [
+                'id',
+                'title',
+                'price',
+                'author',
+                'editor',
+            ],
+        ]);
 });
 
 
-it('can store book', function () {
+it('can store a book', function () {
     $data = [
         'title'  => faker()->text(20),
         'price'  => faker()->numberBetween(45, 60) . '$',
@@ -29,11 +50,11 @@ it('can store book', function () {
         'editor' => faker()->text(20),
     ];
 
-    login()->json('POST', route('books.store'), $data, [])
+    login()->post('/api/books', $data)
         ->assertStatus(201);
 });
 
-it('can update book', function () {
+it('can update a book', function () {
     $book = Book::factory()->create();
 
     $data = [
@@ -43,13 +64,13 @@ it('can update book', function () {
         'author' => faker()->name,
         'editor' => faker()->text(20),
     ];
-    login()->json('PUT', route('books.update', $book->id), $data, [])
+    login()->put('/api/books/' . $book->id, $data)
         ->assertStatus(200);
 });
 
 it('can delete book', function () {
     $book = Book::factory()->create();
 
-    login()->json('DELETE', route('books.destroy', $book->id), [], [])
+    login()->delete('/api/books/' . $book->id)
         ->assertStatus(204);
 });
