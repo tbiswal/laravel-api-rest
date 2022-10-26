@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use function Pest\Faker\faker;
 
 uses(RefreshDatabase::class);
+//uses()->group('rflabdemo');
 
 it('can list all the books', function () {
     login()->get('api/books')
